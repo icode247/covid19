@@ -1,0 +1,293 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="/js/toastr/toastr.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+  <title>Covid-19 Expert System</title>
+</head>
+
+<body class="bg-light">
+  <div class="loader d-none">
+    <div class="dots-7"></div>
+  </div>
+  <div class="loader d-none">
+    <div class="dots-7"></div>
+  </div>
+  <div class="container-sm">  
+    <div class="bg-info d-flex justify-content-sm-between" id="top-nav">
+      <h4 class="text-white font-weight-lighter" id="caption">Patient Information</h4>
+      <button class="btn btn-danger logout">logout</button>
+    </div>
+    <!-- Pills navs -->
+    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="pill" href="#ex3-pills-1" role="tab" aria-controls="ex3-pills-1" aria-selected="true">Add Test Results</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="pill" href="#ex3-pills-2" role="tab" aria-controls="ex3-pills-2" aria-selected="false">add symptoms</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="ex3-tab-3" data-mdb-toggle="pill" href="#ex3-pills-3" role="tab" aria-controls="ex3-pills-3" aria-selected="false">add CHEST IMAGe</a>
+      </li>
+    </ul>
+    <!-- Pills navs -->
+
+    <!-- Pills content -->
+    <div class="tab-content" id="ex2-content">
+      <div class="tab-pane fade show active" id="ex3-pills-1" role="tabpanel" aria-labelledby="ex3-tab-1">
+        <div class="user-info mb-2">
+          <input type="hidden" name="" id="id" value="<%= user._id %>">
+          <small>Name : <%= user.fname %></small>
+          <small class="mb-5">ID : <%= user._id %></small>
+        </div>
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Measure</th>
+              <th scope="col">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <form action="" id="bloodForm">
+              <tr>
+                <th scope="row">White-Cell Count (per µ)</th>
+                <td><input class="form-control" id="whiteBloodCellCount" name="whiteBloodCellCount" type="text" required></td>
+              </tr>
+              <tr>
+                <th scope="row">Red-Cell Count (per µ)</th>
+                <td><input class="form-control" id="redBloodCellCount" name="redBloodCellCount" type="text" required></td>
+              </tr>
+              <tr>
+                <th scope="row">Absolute neutrophil Count (per µ)</th>
+                <td><input class="form-control" id="absoluteNeutralCount" name="absoluteNeutralCount" type="text" required></td>
+              </tr>
+              <tr>
+                <th scope="row">Absolute lymphacyte Count (per µ)</th>
+                <td><input class="form-control" id="absoluteLymphocytesCount" name="absoluteLymphocytesCount" type="text" required></td>
+              </tr>
+              <tr>
+                <th scope="row">Platelete Count(per µ)</th>
+                <td><input class="form-control" id="platelateCount" name="platelateCount" type="text" required></td>
+              </tr>
+              <tr>
+                <th scope="row">Hemoglobin (g/d)</th>
+                <td><input class="form-control" id="hemoglobin" name="hemoglobin" type="text" required></td>
+              </tr>
+              <tr>
+                <th scope="row">Hermatocrite (%)</th>
+                <td><input class="form-control" id="hermatocrite" name="hermatocrite" type="text" required></td>
+              </tr>
+              <tr>
+                <th scope="row">Carbon dioxide (mmol/litre)</th>
+                <td><input class="form-control" id="carborndioxide" name="carborndioxide" type="text" required></td>
+              </tr>
+              <tr>
+                <td> <button class="btn btn-info" type="submit">save</button></td>
+
+              </tr>
+
+            </form>
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="ex3-pills-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+        <div class="user-info mb-2">
+          <small>Name : <%= user.fname %></small>
+          <small class="mb-5">ID : <%= user._id %></small>
+          <input type="hidden" value="<%= user._id %>" id="sympID">
+        </div>
+        <form class="row g-3" id="form_data" action>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Fever: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input fever" id="fever" name="fever" type="radio" value="yes" <%=user.symptoms[0].Fever =='yes'?'checked':''%> >
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input fever" id="fever" name="fever" type="radio" value="no" <%=user.symptoms[0].Fever =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Nausea: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Nausea" id="Nausea" name="Nausea" type="radio" value="yes" <%=user.symptoms[0].Nausea =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Nausea" id="Nausea" name="Nausea" type="radio" value="no" <%=user.symptoms[0].Nausea =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Diarrhea: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Diarrhea" id="Diarrhea" name="Diarrhea" type="radio" value="yes" <%=user.symptoms[0].Diarrhea =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline Diarrhea">
+              <input class="form-check-input Diarrhea" id="Diarrhea" name="Diarrhea" type="radio" value="no" <%=user.symptoms[0].Diarrhea =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Sore throat: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Sore-throat" id="Sore-throat" name="Sore-throat" type="radio" value="yes" <%=user.symptoms[0].Sore_throat =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Sore-throat" id="Sore-throat" name="Sore-throat" type="radio" value="no" <%=user.symptoms[0].Sore_throat =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Runny nose: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Runny-nose" id="Runny-nose" name="Runny-nose" type="radio" value="yes" <%=user.symptoms[0].Runny_nose =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Runny-nose" id="Runny-nose" name="Runny-nose" type="radio" value="no" <%=user.symptoms[0].Runny_nose =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Cough: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Cough" id="Cough" name="Cough" type="radio" value="yes" <%=user.symptoms[0].Cough =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Cough" id="Cough" name="Cough" type="radio" value="no" <%=user.symptoms[0].Cough =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Vomiting: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Vomiting" id="Vomiting" name="Vomiting" type="radio" value="yes" <%=user.symptoms[0].Vomiting =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Vomiting" id="Vomiting" name="Vomiting" type="radio" value="no" <%=user.symptoms[0].Vomiting =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Headeche: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Headeche" id="Headeche" name="Headeche" type="radio" value="yes" <%=user.symptoms[0].Headeche =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Headeche" id="Headeche" name="Headeche" type="radio" value="no" <%=user.symptoms[0].Headeche =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Muscle pain: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Muscle-pain" id="Muscle-pain" name="Muscle-pain" type="radio" value="yes" <%=user.symptoms[0].Muscle_pain =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Muscle-pain" id="Muscle-pain" name="Muscle-pain" type="radio" value="no" <%=user.symptoms[0].Muscle_pain =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">Joint pain: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Joint-pain" id="Joint-pain" name="Joint-pain" type="radio" value="yes" <%=user.symptoms[0].Joint_pain =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input Joint-pain" id="Joint-pain" name="Joint-pain" type="radio" value="no" <%=user.symptoms[0].Joint_pain =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationDefault09">shortness of breath: </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input shortness-of-breath" id="shortness-of-breath" name="shortness-of-breath" type="radio" value="yes" <%=user.symptoms[0].shortness_of_breath =='yes'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input shortness-of-breath" id="shortness-of-breath" name="shortness-of-breath" type="radio" value="no" <%=user.symptoms[0].shortness_of_breath =='no'?'checked':''%>>
+              <label class="form-check-label" for="inlineRadio2">No<label>
+            </label></label></div>
+          </div>
+          <div class="col-md-6"></div>
+          <div class="col-md-4">
+            <div class="form-group mt-5">
+              <button class="btn btn-info" type="submit">save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="ex3-pills-3" role="tabpanel" aria-labelledby="ex3-tab-3">
+        <div class="user-info mb-2">
+          <small>Name : <%= user.fname %></small>
+          <small class="mb-5">ID : <%= user._id %></small>
+        </div>
+        <h4>CT-Scan History</h4>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <form action="/chest" enctype="multipart/form-data" id="chestForm" method="POST">
+              <input type="hidden" name="id" id="id" value="<%= user._id %>">
+              <div class="form-group d-flex justify-content-center mb-4 mt-4 align-items-center">
+                <span class="fa fa-folder-open" id="upload"></span>
+                <input id="img" name="image" type="file" hidden>
+                <p>Upload the chest image</p>
+              </div>
+              <div class="form-group d-flex justify-content-center">
+                <div class="col-md-12">
+                  <p class="form-label">Case Report:</p>
+                  <textarea class="form-control" id="caseReports" name="caseReports" cols="4" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="form-group d-flex justify-content-center mt-5">
+                <div class="col-md-12">
+                  <p class="form-label">Recommendations:</p>
+                  <textarea class="form-control" id="recomendation" name="recomendation" cols="4" rows="2"></textarea>
+                </div>
+              </div>
+              <div class="form-group mt-5">
+                <button class="btn btn-info" type="submit">save</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <ul class="img-list">
+              <% user.chestImage.forEach((image)=>{ %>
+              <li>
+                <span><%= user.chestImage[0].dateCreated %></span>
+                <img class="img-fluid" src="data:image/<%=image.img.contentType%>;base64,
+                <%=image.img.data.toString('base64')%>" alt srcset>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pills content -->
+  </div>
+</body>
+<!-- MDB -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/toastr/toastr.min.js"></script>
+<script src="/js/diagnosis.js" async></script>
+<script src="/js/logout.js" async></script>
+</html>

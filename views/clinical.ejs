@@ -1,0 +1,293 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/js/toastr/toastr.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Covid-19 Expert System</title>
+  </head>
+
+  <body class="bg-light">
+    <div class="loader d-none">
+      <div class="dots-7"></div>
+    </div>
+    <div class="container-sm">
+     
+      <div class="bg-info d-flex justify-content-sm-between" id="top-nav">
+        <h4 class="text-white font-weight-lighter" id="caption">Patient Information</h4>
+        <button class="btn btn-danger logout">logout</button>
+      </div>
+      <!-- Pills navs -->
+      <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link active"
+            id="ex3-tab-1"
+            data-mdb-toggle="pill"
+            href="#ex3-pills-1"
+            role="tab"
+            aria-controls="ex3-pills-1"
+            aria-selected="true"
+            >CLINICAL TESTS</a
+          >
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            id="ex3-tab-2"
+            data-mdb-toggle="pill"
+            href="#ex3-pills-2"
+            role="tab"
+            aria-controls="ex3-pills-2"
+            aria-selected="false"
+            >FOLLOW UP SYMPTOMS</a
+          >
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            id="ex3-tab-3"
+            data-mdb-toggle="pill"
+            href="#ex3-pills-3"
+            role="tab"
+            aria-controls="ex3-pills-3"
+            aria-selected="false"
+            >CHEST IMAGING</a
+          >
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            href="/test?patient_id=<%= user._id %>"
+            >Add Test</a
+          >
+        </li>
+      </ul>
+      <!-- Pills navs -->
+
+      <!-- Pills content -->
+      <div class="tab-content" id="ex2-content">
+        <div
+          class="tab-pane fade show active"
+          id="ex3-pills-1"
+          role="tabpanel"
+          aria-labelledby="ex3-tab-1"
+        >
+        <div class="user-info mb-2">
+            <small>Name :  <%= user.fname %></small>
+            <small class="mb-5">ID :  <%= user._id %></small>
+          </div>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Measure</th>
+                <th scope="col">Difference Range</th>
+                <% let d= 1 %>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <th>day <%= d %></th>
+                  <% d++ %>
+                <% } %>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">White-Cell Count (per µ)</th>
+                <td>3800-11,000</td>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <td><%= user.cbcTest[i].whiteBloodCellCount %></td>
+                <% } %>
+              </tr>
+              <tr>
+                <th scope="row">Red-Cell Count (per µ)</th>
+                <td>4,200.000-5,700,000</td>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <td><%= user.cbcTest[i].redBloodCellCount %></td>
+                <% } %>
+              </tr>
+              <tr>
+                <th scope="row">Absolute neutrophil Count (per µ)</th>
+                <td>1900-7400</td>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <td><%= user.cbcTest[i].absoluteNeutralCount%></td>
+                <% } %>
+              </tr>
+              <tr>
+                <th scope="row">Absolute lymphacyte Count (per µ)</th>
+                <td>1000-3900</td>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <td><%= user.cbcTest[i].absoluteLymphocytesCount %></td>
+                <% } %>
+              </tr>
+              <tr>
+                <th scope="row">Platelete Count(per µ)</th>
+                <td>150,000-400,000</td>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <td><%= user.cbcTest[i].platelateCount %></td>
+                <% } %>
+              </tr>
+              <tr>
+                <th scope="row">Hemoglobin (g/d)</th>
+                <td>13.2-17</td>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <td><%= user.cbcTest[i].hemoglobin %></td>
+                <% } %>
+              </tr>
+              <tr>
+                <th scope="row">Hermatocrite (%)</th>
+                <td>390.0-50.0</td>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <td><%= user.cbcTest[i].hermatocrite %></td>
+                <% } %>
+              </tr>
+              <tr>
+                <th scope="row">Carbon dioxide (mmol/litre)</th>
+                <td>20-31</td>
+                <% for(let i =0; i <user.cbcTest.length; i++){ %>
+                  <td><%= user.cbcTest[i].carborndioxide %></td>
+                <% } %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="ex3-pills-2"
+          role="tabpanel"
+          aria-labelledby="ex3-tab-2"
+        >
+          <div class="user-info mb-2">
+            <small>Name :  <%= user.fname %></small>
+            <small class="mb-5">ID :  <%= user._id %></small>
+          </div>
+          <h4 class="text-green">SYMPTOMS</h4>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Fever</th>
+                <th scope="col">Diarrhea</th>
+                <th scope="col">Runny nose</th>
+                <th scope="col">Vomiting</th>
+                <th scope="col">Muscle pain</th>    
+                <th scope="col">Shortness of breath</th>
+                <th scope="col">Nausea</th>
+                <th scope="col">Sore throat</th>
+                <th scope="col">Headache</th>
+                <th scope="col">Join pain</th>
+                <th scope="col">Cough</th>            
+              </tr>
+            </thead>
+            <tbody>
+              <% user.symptoms.forEach((data)=>{ %>
+              <tr>
+                <td><%= data.dateCreated %></td>
+                <td><span class="<%=data.Fever=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Diarrhea=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Runny_nose=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Vomiting=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Muscle_pain=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.shortness_of_breath=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Nausea=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Sore_throat=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Headeche=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Joint_pain=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+                <td><span class="<%=data.Cough=='yes'? 'fa fa-times':'fa fa-check'%>"></span></span></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <div class="control-buttons"></div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="ex3-pills-3"
+          role="tabpanel"
+          aria-labelledby="ex3-tab-3"
+        >
+        <div class="user-info mb-2">
+            <small>Name : Zion Chibuike</small>
+            <small class="mb-5">ID : 34888293849257</small>
+          </div>
+          <h4>CT-Scan History</h4>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <table class="table table-sm table-striped table-responsive">
+                <thead>
+                  <tr class="active">
+                    <th scope="col">Date</th>
+                    <th scope="col">Case Report</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% for(let i =0; i<user.chestImage.length; i++){ %>
+                  <tr>
+                    <td><%= user.chestImage[i].dateCreated %></td>
+                    <td><%= user.chestImage[i].caseReports %> <span class="fa fa-search-plus"></span></td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <ul class="img-list">
+                <% user.chestImage.forEach((image)=>{ %>
+                  <li>
+                    <span><%= user.chestImage[0].dateCreated %></span>
+                    <img class="img-fluid" src="data:image/<%=image.img.contentType%>;base64,
+                    <%=image.img.data.toString('base64')%>" alt srcset>
+                  </li>
+                  <% }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="ex3-pills-4"
+        role="tabpanel"
+        aria-labelledby="ex3-tab-4"
+      >
+        sss
+      </div>
+      <!-- Pills content -->
+    </div>
+  </body>
+  <!-- MDB -->
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="js/toastr/toastr.min.js"></script>
+  <script src="/js/app.js" async></script>
+  <script src="/js/logout.js" async></script>
+</html>
